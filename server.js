@@ -47,7 +47,7 @@ let root = {
   },
   addUser(args){
     return new Promise((resolve, reject) => {
-      pool.query('insert into users(firstname, lastname) values($1, $2) RETURNING id', [args.firstname, args.lastname], (err, result) => {
+      pool.query(`insert into users(firstname, lastname) values(${args.firstname}, ${args.lastname}) RETURNING id`, (err, result) => {
         if (err) return reject(err);
         resolve({id: result.rows[0].id});
       });
