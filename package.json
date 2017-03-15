@@ -1,0 +1,19 @@
+{
+  "name": "rgp-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate Template for React, GraphQL, and PostgreSQL application",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "pg:start": "pg_ctl -D ./data -l logfile start",
+    "pg:stop": "pg_ctl -D ./data stop"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-graphql": "^0.6.3",
+    "graphql": "^0.9.1",
+    "pg": "^6.1.4"
+  }
+}
