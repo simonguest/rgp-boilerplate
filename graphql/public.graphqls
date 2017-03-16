@@ -1,12 +1,21 @@
+# Organizations in the system
+type Organization {
+    id: String!
+    name: String
+}
+
 # Users in the system
 type User {
     id: String!
     firstname: String
     lastname: String
+    organization: String
 }
 
 # All queries
 type Query {
     # Returns all users in the system
-    users: [User]
+    users(orgid: String): [User]
+    # Returns all organizations in the system
+    organizations: [Organization]
 }

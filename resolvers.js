@@ -2,9 +2,18 @@ let resolvers = function(){};
 
 resolvers.prototype.root = (pool) => {
   return {
-    users(){
+    organizations(){
       return new Promise((resolve, reject) => {
-        pool.query('select * from users', (err, result) => {
+        pool.query('select * from organizations', (err, result) => {
+          if (err) return reject(err);
+          resolve(result.rows);
+        });
+      });
+    },
+    users(args){
+      let orgQuery = args.orgid ? `where organizations.id = '${args.orgid}'` : '';
+      return new Promise((resolve, reject) => {
+        pool.query(`select users.id, firstname, lastname, organizations.name as organization from users inner join organizations on (organizations.id = users.orgid) ${orgQuery};`, (err, result) => {
           if (err) return reject(err);
           resolve(result.rows);
         });

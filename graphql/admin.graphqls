@@ -1,8 +1,15 @@
+# Organizations in the system
+type Organization {
+    id: String!
+    name: String
+}
+
 # Users in the system
 type User {
     id: String!
     firstname: String
     lastname: String
+    organization: String
 }
 
 # Contains the id of the user
@@ -24,4 +31,6 @@ type Mutation {
 type Query {
     # Returns all users in the system
     users: [User]
+    # Returns all organizations in the system
+    organizations: [Organization]
 }
