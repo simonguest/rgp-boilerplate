@@ -1,18 +1,27 @@
 # Users in the system
 type User {
-    id: String! #required
+    id: String!
     firstname: String
     lastname: String
 }
 
+# Contains the id of the user
 type Result {
     id: String
 }
 
+# Mutations to add, rename, and remove users
 type Mutation {
-    addUser(firstname: String, lastname:String): Result
+    # Add a user
+    addUser(firstname: String!, lastname:String!): Result
+    # Rename a user
+    renameUser(id: String!, firstname: String, lastname: String): User
+    # Remove a user
+    removeUser(id: String!): Result
 }
 
+# All queries
 type Query {
-    user: [User]
+    # Returns all users in the system
+    users: [User]
 }
