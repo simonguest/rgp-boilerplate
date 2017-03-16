@@ -1,10 +1,10 @@
 const fs = require('fs');
+const pg = require('pg');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const {buildSchema} = require('graphql');
 const resolvers = require('./resolvers');
 
-const pg = require('pg');
 let config = {
   database: 'postgres', //env var: PGDATABASE
   host: 'localhost', // Server hosting the postgres database
@@ -15,9 +15,15 @@ let config = {
 
 let pool = new pg.Pool(config);
 const app = express();
-let schema = buildSchema(fs.readFileSync('schema.graphqls', 'utf8'));
 
-app.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers.root(pool), graphiql: true}));
+// Admin GraphQL schema
+let adminSchema = buildSchema(fs.readFileSync('./graphql/admin.graphqls', 'utf8'));
+app.use('/graphql/admin', graphqlHTTP({schema: adminSchema, rootValue: resolvers.root(pool), graphiql: true}));
+
+// Public (non-authenticated) GraphQL schema
+let publicSchema = buildSchema(fs.readFileSync('./graphql/public.graphqls', 'utf8'));
+app.use('/graphql', graphqlHTTP({schema: publicSchema, rootValue: resolvers.root(pool), graphiql: true}));
+
 
 pool.connect()
   .then(() => {

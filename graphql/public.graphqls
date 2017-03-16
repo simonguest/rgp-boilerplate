@@ -1,0 +1,12 @@
+# Users in the system
+type User {
+    id: String!
+    firstname: String
+    lastname: String
+}
+
+# All queries
+type Query {
+    # Returns all users in the system
+    users: [User]
+}
