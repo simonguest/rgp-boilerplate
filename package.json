@@ -8,12 +8,16 @@
     "pg:start": "pg_ctl -D ./data -l logfile start",
     "pg:stop": "pg_ctl -D ./data stop"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Simon Guest",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.15.2",
     "express-graphql": "^0.6.3",
+    "express-session": "^1.15.1",
     "graphql": "^0.9.1",
+    "node-uuid": "^1.4.7",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
     "pg": "^6.1.4"
   }
 }
