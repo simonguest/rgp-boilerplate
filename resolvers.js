@@ -1,4 +1,5 @@
-let resolvers = function(){};
+let resolvers = function () {
+};
 
 resolvers.prototype.root = (pool) => {
   return {
@@ -19,9 +20,17 @@ resolvers.prototype.root = (pool) => {
         });
       });
     },
+    addOrganization(args){
+      return new Promise((resolve, reject) => {
+        pool.query(`insert into organizations (name) values('${args.name}') RETURNING id;`, (err, result) => {
+          if (err) return reject(err);
+          resolve({id: result.rows[0].id});
+        });
+      })
+    },
     addUser(args){
       return new Promise((resolve, reject) => {
-        pool.query(`insert into users(firstname, lastname) values('${args.firstname}', '${args.lastname}') RETURNING id;`, (err, result) => {
+        pool.query(`insert into users (firstname, lastname, orgid) values('${args.firstname}', '${args.lastname}', '${args.orgid}') RETURNING id;`, (err, result) => {
           if (err) return reject(err);
           resolve({id: result.rows[0].id});
         });
@@ -36,11 +45,20 @@ resolvers.prototype.root = (pool) => {
         });
       })
     },
-    removeUser(args){
+    renameOrganization(args){
       return new Promise((resolve, reject) => {
-        pool.query(`delete from users where id='${args.id}' returning id;`, (err, result) => {
+        pool.query(`update organizations set name='${args.name}' where id='${args.id}' returning id, name;`, (err, result) => {
           if (err) return reject(err);
-          if (result.rows.length !== 1) return reject("Could not remove user with that id");
+          if (result.rows.length !== 1) return reject("Could not rename organization with that id");
+          resolve(result.rows[0]);
+        });
+      })
+    },
+    removeOrganization(args){
+      return new Promise((resolve, reject) => {
+        pool.query(`delete from organizations where id='${args.id}' returning id;`, (err, result) => {
+          if (err) return reject(err);
+          if (result.rows.length !== 1) return reject("Could not remove organization with that id");
           resolve({id: result.rows[0].id});
         });
       })

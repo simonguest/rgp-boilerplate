@@ -17,20 +17,26 @@ type Result {
     id: String
 }
 
-# Mutations to add, rename, and remove users
+# Mutations to add, rename, and remove users and organizations
 type Mutation {
     # Add a user
-    addUser(firstname: String!, lastname:String!): Result
+    addUser(firstname: String!, lastname: String!, orgid: String!): Result
     # Rename a user
     renameUser(id: String!, firstname: String, lastname: String): User
     # Remove a user
     removeUser(id: String!): Result
+    # Add an organization
+    addOrganization(name: String!): Result
+    # Rename an organization
+    renameOrganization(id: String!, name: String!): Organization
+    # Remove an organization
+    removeOrganization(id: String!): Result
 }
 
 # All queries
 type Query {
     # Returns all users in the system
-    users: [User]
+    users(orgid: String): [User]
     # Returns all organizations in the system
     organizations: [Organization]
 }
