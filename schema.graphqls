@@ -1,0 +1,18 @@
+# Users in the system
+type User {
+    id: String! #required
+    firstname: String
+    lastname: String
+}
+
+type Result {
+    id: String
+}
+
+type Mutation {
+    addUser(firstname: String, lastname:String): Result
+}
+
+type Query {
+    user: [User]
+}

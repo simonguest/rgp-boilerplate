@@ -1,6 +1,8 @@
+const fs = require('fs');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-var {buildSchema} = require('graphql');
+const {buildSchema} = require('graphql');
+const resolvers = require('./resolvers');
 
 const pg = require('pg');
 let config = {
@@ -12,50 +14,10 @@ let config = {
 };
 
 let pool = new pg.Pool(config);
-
 const app = express();
+let schema = buildSchema(fs.readFileSync('schema.graphqls', 'utf8'));
 
-let schema = buildSchema(`
-# Users in the system
-type User {
-  id: String! #required
-  firstname: String
-  lastname: String
-}
-
-type Result { 
-  id: String
-}
-
-type Mutation {
-  addUser(firstname: String, lastname:String): Result
-}
-
-type Query { 
-  user: [User]
-}
-`);
-
-let root = {
-  user(){
-    return new Promise((resolve, reject) => {
-      pool.query('select * from users', (err, result) => {
-        if (err) return reject(err);
-        resolve(result.rows);
-      });
-    });
-  },
-  addUser(args){
-    return new Promise((resolve, reject) => {
-      pool.query(`insert into users(firstname, lastname) values(${args.firstname}, ${args.lastname}) RETURNING id`, (err, result) => {
-        if (err) return reject(err);
-        resolve({id: result.rows[0].id});
-      });
-    })
-  }
-};
-
-app.use('/graphql', graphqlHTTP({schema: schema, rootValue: root, graphiql: true}));
+app.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers.root(pool), graphiql: true}));
 
 pool.connect()
   .then(() => {
