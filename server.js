@@ -3,7 +3,8 @@ const pg = require('pg');
 let pool = new pg.Pool({database: 'postgres'});
 
 // Express and GraphQL Middleware
-const app = require('express')();
+const express = require('express');
+const app = express();
 const graphqlHTTP = require('express-graphql');
 const {buildSchema} = require('graphql');
 const resolvers = require('./resolvers');
@@ -20,9 +21,12 @@ app.use('/graphql/admin', fbAuth.ensureAuthenticated, graphqlHTTP({schema: admin
 let publicSchema = buildSchema(require('fs').readFileSync('./graphql/public.graphqls', 'utf8'));
 app.use('/graphql', graphqlHTTP({schema: publicSchema, rootValue: resolvers.root(pool), graphiql: true}));
 
+// Static webpack generated content
+app.use('/static', express.static(`dist`));
+
 // Default page
-app.get('/', (req, res) => {
-  res.send("Hello RGP app");
+app.use('/', (req, res) => {
+  res.sendFile(`${__dirname}/index.html`);
 });
 
 // Start server on pool connection
