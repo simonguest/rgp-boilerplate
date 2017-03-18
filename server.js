@@ -26,7 +26,7 @@ app.use('/static', express.static(`dist`));
 
 // Default page
 app.use('/', (req, res) => {
-  res.sendFile(`${__dirname}/index.html`);
+  res.sendFile(`${__dirname}/client/index.html`);
 });
 
 // Start server on pool connection

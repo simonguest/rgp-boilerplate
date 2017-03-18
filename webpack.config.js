@@ -1,9 +1,9 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: [
-    './components/App.jsx'
+    './client/index.jsx'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -18,5 +18,11 @@ module.exports = {
       exclude: /node_modules/,
       loaders: ['babel-loader']
     }]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    modules: [
+      'node_modules'
+    ]
   }
 };
