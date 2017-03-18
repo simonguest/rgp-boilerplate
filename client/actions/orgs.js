@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import gql from '../gql';
 
 export const REQUEST_ORG = 'REQUEST_ORG';
 export const RECEIVE_ORG = 'RECEIVE_ORG';
@@ -10,7 +10,6 @@ export const requestOrgs = () => {
 };
 
 export const receiveOrgs = (data) => {
-  console.log(data);
   return {
     type: RECEIVE_ORG,
     data
@@ -20,12 +19,10 @@ export const receiveOrgs = (data) => {
 export const fetchOrgs = () => {
   return dispatch => {
     dispatch(requestOrgs());
-    return fetch(`/graphql`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/graphql'},
-      body: 'query q { organizations { id name } }'
-    })
-      .then(response => response.json())
-      .then(json => dispatch(receiveOrgs(json.data)))
+    return gql(
+      `query q { organizations { id name } }`,
+      data => dispatch(receiveOrgs(data)),
+      err => console.log(err)
+    )
   }
 };
