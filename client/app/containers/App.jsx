@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import OrgPanel from '../containers/OrgPanel';
+import OrgPanel from './OrgPanel';
 
 class App extends Component {
 
@@ -11,6 +11,7 @@ class App extends Component {
       <div>
         <Header/>
         <OrgPanel/>
+        <a href="/admin">Admin</a>
       </div>
     )
   }
