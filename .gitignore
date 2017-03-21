@@ -1,6 +1,5 @@
 .idea
 node_modules
 data
-logfile
 npm-debug.log
 dist

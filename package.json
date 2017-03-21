@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "node_modules/.bin/webpack --watch --progress &",
     "dev": "node_modules/.bin/nodemon --ignore dist/ server.js",
-    "pg:start": "pg_ctl -D ./data -l logfile start",
+    "pg:start": "pg_ctl -D ./data -w start",
     "pg:stop": "pg_ctl -D ./data stop"
   },
   "author": "Simon Guest",
