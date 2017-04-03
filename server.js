@@ -13,13 +13,9 @@ const resolvers = require('./resolvers');
 const auth = require('./auth');
 let fb = auth.facebook(app, {callbackURL: 'http://localhost:3002/auth/callback', clientID: process.env.FACEBOOK_CLIENT_ID, clientSecret: process.env.FACEBOOK_SECRET});
 
-// Admin GraphQL schema
-let adminSchema = buildSchema(require('fs').readFileSync('./graphql/admin.graphqls', 'utf8'));
-app.use('/graphql/admin', fb.ensureAuthenticated, graphqlHTTP({schema: adminSchema, rootValue: resolvers.root(pool), graphiql: true}));
-
-// Public (non-authenticated) GraphQL schema
-let publicSchema = buildSchema(require('fs').readFileSync('./graphql/public.graphqls', 'utf8'));
-app.use('/graphql', graphqlHTTP({schema: publicSchema, rootValue: resolvers.root(pool), graphiql: true}));
+// GraphQL schema
+let schema = buildSchema(require('fs').readFileSync('./schema.graphqls', 'utf8'));
+app.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers.root(pool), graphiql: true}));
 
 // Static webpack generated content
 app.use('/static', express.static(`dist`));

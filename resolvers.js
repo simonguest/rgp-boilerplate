@@ -20,24 +20,27 @@ resolvers.prototype.root = (pool) => {
         });
       });
     },
-    addOrganization(args){
+    addOrganization(args, req){
       return new Promise((resolve, reject) => {
+        if (req.isUnauthenticated()) return reject("You need to be authenticated.");
         pool.query(`insert into organizations (name) values('${args.name}') RETURNING id;`, (err, result) => {
           if (err) return reject(err);
           resolve({id: result.rows[0].id});
         });
       })
     },
-    addUser(args){
+    addUser(args, req){
       return new Promise((resolve, reject) => {
+        if (req.isUnauthenticated()) return reject("You need to be authenticated.");
         pool.query(`insert into users (firstname, lastname, orgid) values('${args.firstname}', '${args.lastname}', '${args.orgid}') RETURNING id;`, (err, result) => {
           if (err) return reject(err);
           resolve({id: result.rows[0].id});
         });
       })
     },
-    renameUser(args){
+    renameUser(args, req){
       return new Promise((resolve, reject) => {
+        if (req.isUnauthenticated()) return reject("You need to be authenticated.");
         pool.query(`update users set firstname='${args.firstname}', lastname='${args.lastname}' where id='${args.id}' returning id, firstname, lastname;`, (err, result) => {
           if (err) return reject(err);
           if (result.rows.length !== 1) return reject("Could not rename user with that id");
@@ -45,7 +48,8 @@ resolvers.prototype.root = (pool) => {
         });
       })
     },
-    renameOrganization(args){
+    renameOrganization(args, req){
+      if (req.isUnauthenticated()) return reject("You need to be authenticated.");
       return new Promise((resolve, reject) => {
         pool.query(`update organizations set name='${args.name}' where id='${args.id}' returning id, name;`, (err, result) => {
           if (err) return reject(err);
@@ -54,7 +58,8 @@ resolvers.prototype.root = (pool) => {
         });
       })
     },
-    removeOrganization(args){
+    removeOrganization(args, req){
+      if (req.isUnauthenticated()) return reject("You need to be authenticated.");
       return new Promise((resolve, reject) => {
         pool.query(`delete from organizations where id='${args.id}' returning id;`, (err, result) => {
           if (err) return reject(err);

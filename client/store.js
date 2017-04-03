@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
-import reducers from './app/reducers/organizations'
+import reducers from './reducers'
 import { routerReducer } from 'react-router-redux'
 
 export default function configureStore(initialState) {

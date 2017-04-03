@@ -10,8 +10,8 @@ class OrgList extends Component {
     const {orgs} = this.props;
     let orgItems = orgs.map((org) => {
       return (
-        <div>
-          <p key={org.id}>{org.name}</p>
+        <div key={org.id}>
+          <p>{org.name}</p>
           <a href="#">Edit</a>
         </div>
       );

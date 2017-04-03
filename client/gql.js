@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
-export default function gql(path, query, result, err) {
-  return fetch(path, {
+export default function gql(query, result, err) {
+  return fetch('/graphql', {
     method: 'POST',
     credentials: 'same-origin',
     headers: {'Content-Type': 'application/graphql'},

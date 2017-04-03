@@ -1,5 +1,5 @@
 import R from 'ramda';
-import {RECEIVE_ORG, REQUEST_ORG} from '../actions/orgs';
+import {RECEIVE_ORG, REQUEST_ORG} from './app/actions/orgs';
 
 export default function organizations(state = {isFetching: false, items:[]}, action) {
   switch (action.type) {
