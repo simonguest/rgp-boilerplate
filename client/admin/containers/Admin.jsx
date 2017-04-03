@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import AdminHeader from '../components/Header';
+import OrgPanel from '../containers/OrgPanel';
 
 class Admin extends Component {
 
@@ -9,6 +10,7 @@ class Admin extends Component {
     return (
       <div>
         <AdminHeader/>
+        <OrgPanel/>
         <a href="/">Return to site</a>
       </div>
     )

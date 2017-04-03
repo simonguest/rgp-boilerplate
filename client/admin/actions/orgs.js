@@ -20,7 +20,7 @@ export const fetchOrgs = () => {
   return dispatch => {
     dispatch(requestOrgs());
     return gql(
-      '/graphql',
+      '/graphql/admin',
       `query q { organizations { id name } }`,
       data => dispatch(receiveOrgs(data)),
       err => console.log(err)
