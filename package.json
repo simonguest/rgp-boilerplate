@@ -4,7 +4,9 @@
   "description": "Boilerplate Template for React, GraphQL, and PostgreSQL application",
   "main": "server.js",
   "scripts": {
-    "predev": "node_modules/.bin/webpack --watch --progress &",
+    "webpack:build": "node_modules/.bin/webpack",
+    "webpack:watch" : "node_modules/.bin/webpack --watch &",
+    "predev": "npm run webpack:build && npm run webpack:watch",
     "dev": "node_modules/.bin/nodemon --ignore dist/ server.js",
     "pg:start": "pg_ctl -D ./data -w start",
     "pg:stop": "pg_ctl -D ./data stop"
