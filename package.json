@@ -5,9 +5,12 @@
   "main": "server.js",
   "scripts": {
     "webpack:build": "node_modules/.bin/webpack",
-    "webpack:watch" : "node_modules/.bin/webpack --watch &",
+    "webpack:watch": "node_modules/.bin/webpack --watch &",
     "predev": "npm run webpack:build && npm run webpack:watch",
     "dev": "node_modules/.bin/nodemon --ignore dist/ server.js",
+    "pretest": "rm -rf ./coverage",
+    "test": "node_modules/.bin/istanbul --handle-sigint cover server.js",
+    "test:view": "open ./coverage/lcov-report/index.html",
     "pg:start": "pg_ctl -D ./data -w start",
     "pg:stop": "pg_ctl -D ./data stop"
   },
@@ -37,5 +40,8 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "webpack": "^2.2.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5"
   }
 }
