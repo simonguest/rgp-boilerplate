@@ -32,6 +32,11 @@ app.use('/', (req, res) => {
 pool.connect()
   .then(() => {
     app.listen(3002, function () {
-      console.log('server is listening on 3002')
-    })
+      console.log('Server is listening on 3002');
+      if (process.env.TEST_MODE === "1") {
+        // run tests here
+        console.log('Tests complete. Shutting down server.');
+        process.exit(0);
+      }
+    });
   });

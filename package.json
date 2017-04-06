@@ -8,8 +8,8 @@
     "webpack:watch": "node_modules/.bin/webpack --watch &",
     "predev": "npm run webpack:build && npm run webpack:watch",
     "dev": "node_modules/.bin/nodemon --ignore dist/ server.js",
-    "pretest": "rm -rf ./coverage",
-    "test": "node_modules/.bin/istanbul --handle-sigint cover server.js",
+    "pretest": "npm run webpack:build",
+    "test": "rm -rf ./coverage && TEST_MODE=1 node_modules/.bin/istanbul --handle-sigint cover server.js",
     "test:view": "open ./coverage/lcov-report/index.html",
     "pg:start": "pg_ctl -D ./data -w start",
     "pg:stop": "pg_ctl -D ./data stop"
