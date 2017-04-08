@@ -5,6 +5,7 @@ let pool = new pg.Pool();
 // Express and GraphQL Middleware
 const express = require('express');
 const app = express();
+const router = express.Router();
 const graphqlHTTP = require('express-graphql');
 const {buildSchema} = require('graphql');
 const resolvers = require('./resolvers');
@@ -15,23 +16,30 @@ let fb = auth.facebook(app, {callbackURL: 'http://localhost:3002/auth/callback',
 
 // GraphQL schema
 let schema = buildSchema(require('fs').readFileSync('./server/schema.graphqls', 'utf8'));
-app.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers.root(pool), graphiql: true}));
+router.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers.root(pool), graphiql: true}));
 
 // Static webpack generated content
-app.use('/static', express.static(`dist`));
+router.use('/static', express.static(`dist`));
 
 // Auth required for admin route
-app.use('/admin', fb.ensureAuthenticated);
+router.use('/admin', fb.ensureAuthenticated);
 
 // Default page
-app.use('/', (req, res) => {
+router.use('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`);
 });
 
 // Start server on pool connection
-pool.connect()
-  .then(() => {
-    app.listen(3002, function () {
-      console.log('Server is listening on 3002');
-    });
-  });
+module.exports = {
+  start: (qe) => {
+    if (qe) app.use('/qe', qe);
+    app.use('/', router);
+
+    pool.connect()
+      .then(() => {
+        app.listen(3002, function () {
+          console.log('Server is listening on 3002');
+        });
+      });
+  }
+}
