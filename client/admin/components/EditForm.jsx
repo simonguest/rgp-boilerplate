@@ -1,38 +1,22 @@
-import React, {PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 
-const EditForm = ({ selectedOrg }) => (
-  <li>
-    {selectedOrg}
-  </li>
-);
+class EditForm extends Component {
+  componentDidMount() {
+  }
+
+  render() {
+    const {onClick} = this.props;
+    return (
+      <div>
+        <input type="text" ref="nameInput" placeholder="New Name"/>
+        <button onClick={() => {onClick(this.refs.nameInput.value)}}>Update</button>
+      </div>
+    );
+  }
+}
 
 EditForm.propTypes = {
-  selectedOrg: PropTypes.string.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
 export default EditForm
-
-// class EditForm extends Component {
-//
-//   componentDidMount() {
-//   }
-//
-//   updateOrg(id) {
-//     //console.log(this.props);
-//     ///const {selectedOrg} = this.props;
-//     console.log('will be updating org of id: '+id);
-//   }
-//
-//   render() {
-//     console.log(this.props);
-//     return (
-//       <div>
-//         <p>Company: {this.props.children.selectedOrg}</p>
-//         <input ref="name" type="text" placeholder="Company Name"/>
-//         <button onClick={() => this.updateOrg(this.props.children.selectedOrg)}>Update Name</button>
-//       </div>
-//     );
-//   }
-// }
-//
-// export default EditForm;
