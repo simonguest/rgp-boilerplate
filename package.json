@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Boilerplate Template for React, GraphQL, and PostgreSQL application",
   "scripts": {
+    "webpack:vendor": "node_modules/.bin/webpack --config=webpack.dll.js",
     "webpack:build": "node_modules/.bin/webpack",
     "webpack:watch": "node_modules/.bin/webpack --watch &",
     "prestart": "npm run webpack:build && npm run webpack:watch",
     "start": "PGDATABASE=postgres node_modules/.bin/nodemon --ignore dist/ index.js",
+    "dev": "NODE_ENV=development npm start",
+    "prod": "NODE_ENV=production npm start",
     "pg:start": "pg_ctl -D ./data -w start",
     "pg:stop": "pg_ctl -D ./data stop"
   },
@@ -36,7 +39,7 @@
     "react-router-redux": "^4.0.8",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.3.3"
   },
   "devDependencies": {
     "istanbul": "^0.4.5"

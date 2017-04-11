@@ -7,16 +7,18 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'app.bundle.js',
     publicPath: '/static/'
   },
-  plugins: [
-  ],
+  plugins: [new webpack.DllReferencePlugin({
+    context: '.',
+    manifest: require('./dist/vendor-manifest.json'),
+  })],
   module: {
     rules: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loaders: ['babel-loader']
+      loader: 'babel-loader?-babelrc,+cacheDirectory,presets[]=es2015,presets[]=react'
     }]
   },
   resolve: {
