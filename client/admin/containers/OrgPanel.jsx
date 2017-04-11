@@ -1,11 +1,13 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import OrgList from '../components/OrgList'
-import {toggle, del, fetchOrgs} from '../actions/orgs';
+import {selectOrg, fetchOrgs} from '../../actions';
 
 const mapStateToProps = (state) => {
   return {
-    orgs: state.orgs.items
+    orgs: state.orgs.items,
+    selectedOrg: state.orgs.selectedOrg,
+    isFetching: state.orgs.isFetching
   }
 };
 
@@ -13,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchOrgs: () => {
       dispatch(fetchOrgs())
+    },
+    selectOrg: (data) => {
+      dispatch(selectOrg(data))
     }
   }
 };

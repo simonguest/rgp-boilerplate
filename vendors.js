@@ -3,4 +3,3 @@ require('react-dom');
 require('react-redux');
 require('react-router');
 require('redux');
-require('ramda');
