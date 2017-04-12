@@ -1,9 +1,8 @@
 const istanbul = require('istanbul-middleware');
-const pg = require('pg');
-let pool = new pg.Pool();
-
 const url = require('url');
 const express = require('express');
+
+const datasets = require('./datasets');
 
 let router = express.Router();
 
@@ -13,16 +12,18 @@ router.use('/kill', () => {
 
 router.use('/coverage', istanbul.createHandler({verbose: true, resetOnGet: true}));
 
-router.use('/data', (req, res) => {
-  // check if path exists
-  if (req.path === '/default') {
-    pool.query(require('fs').readFileSync(`${__dirname}/data/default.sql`, 'utf8'), (err) => {
-      if (err) return res.send({status: `error: ${err}`});
-      res.send({status: 'success'});
-    });
-  } else {
-    res.send({datasets: ['default']});
-  }
+router.use('/datasets', (req, res) => {
+  if (Object.keys(datasets).indexOf(req.path.replace('/', '')) === -1) res.send({datasets: Object.keys(datasets)});
+  Object.keys(datasets).map((dataset) => {
+    if (req.path === `/${dataset}`) {
+      datasets[dataset]()
+        .then((status) => {
+          return res.send({status: status});
+        }, (err) => {
+          return res.send({error: err});
+        });
+    }
+  });
 });
 
 router.use('/', (req, res) => {
