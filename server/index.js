@@ -31,8 +31,8 @@ router.use('/', (req, res) => {
 
 // Start server on pool connection
 module.exports = {
-  start: (qe) => {
-    if (qe) app.use('/qe', qe);
+  start: (test) => {
+    if (test) app.use('/test', test);
     app.use('/', router);
 
     pool.connect()
