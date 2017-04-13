@@ -6,7 +6,7 @@ export default class AdminHeader extends Component {
     let title = `Sample Application - Admin Page ${isFetching ? '(Loading)' : ''}`;
     return (
       <div>
-        <h1>{title}</h1>
+        <h1 id="title">{title}</h1>
       </div>
     );
   }
