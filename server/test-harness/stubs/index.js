@@ -1,6 +1,6 @@
 const sinon = require('sinon');
 
-const resolvers = require('../../server/resolvers');
+const resolvers = require('../../../server/resolvers');
 
 let organizationsStub = undefined;
 
