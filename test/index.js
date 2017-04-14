@@ -32,7 +32,7 @@ router.use('/', (req, res) => {
       {'/kill': 'Terminates the service (used for CI routine)'},
       {'/coverage': 'View the current code coverage report'},
       {'/coverage/download': 'Download the code coverage report'},
-      {'/data': 'Initialize datasets'}
+      {'/datasets': 'Initialize datasets'}
     ]
   });
 });

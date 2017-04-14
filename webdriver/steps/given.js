@@ -17,11 +17,17 @@ import isEnabled from '../support/check/isEnabled';
 import isVisible from '../support/check/isVisible';
 import openWebsite from '../support/action/openWebsite';
 import resizeScreenSize from '../support/action/resizeScreenSize';
+import loadDataset from '../support/action/loadDataset';
 
 module.exports = function given() {
     this.Given(
         /^I open the (url|site) "([^"]*)?"$/,
         openWebsite
+    );
+
+    this.Given(
+        /^I load the dataset "([^"]*)?"$/,
+        loadDataset
     );
 
     this.Given(
