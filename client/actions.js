@@ -5,6 +5,14 @@ export const RECEIVE_ORG = 'RECEIVE_ORG';
 export const SELECT_ORG = 'SELECT_ORG';
 export const UPDATE_ORG = 'UPDATE_ORG';
 export const MUTATE_ORG = 'MUTATE_ORG';
+export const API_ERROR = 'API_ERROR';
+
+export const apiError = (data) => {
+  return {
+    type: API_ERROR,
+    data
+  }
+};
 
 export const selectOrg = (data) => {
   return {
@@ -25,13 +33,8 @@ export const updateOrg = (data) => {
     dispatch(mutateOrg(data));
     return gql(
       `mutation mm { renameOrganization(id:"${data.id}", name:"${data.name}") { id } }`,
-      (data) => {
-        console.log(data);
-        dispatch(fetchOrgs());
-      },
-      (err) => {
-        console.log(err);
-      }
+      data => dispatch(fetchOrgs()),
+      err => dispatch(apiError(err))
     )
   };
 };
@@ -55,7 +58,7 @@ export const fetchOrgs = () => {
     return gql(
       `query q { organizations { id name } }`,
       data => dispatch(receiveOrgs(data)),
-      err => console.log(err)
+      err => dispatch(apiError(err))
     );
   }
 };

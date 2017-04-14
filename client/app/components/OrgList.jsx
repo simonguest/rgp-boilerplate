@@ -1,10 +1,11 @@
 import React, {Component, PropTypes} from 'react'
 
 class OrgList extends Component {
-  componentDidMount(){
-    const { fetchOrgs } = this.props;
+  componentDidMount() {
+    const {fetchOrgs} = this.props;
     fetchOrgs();
   }
+
   render() {
     const {orgs} = this.props;
     let orgItems = orgs.map((org) => {

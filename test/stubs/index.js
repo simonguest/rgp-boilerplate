@@ -6,6 +6,7 @@ let organizationsStub = undefined;
 
 module.exports.organizations = () => {
   return new Promise((resolve) => {
+    if (organizationsStub) resolve('success'); // already applied
     organizationsStub = sinon.stub(resolvers(), "organizations").callsFake(() => {
       return new Promise((resolve, reject) => {
         reject("Database is unavailable.");

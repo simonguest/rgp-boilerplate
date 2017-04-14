@@ -18,6 +18,9 @@ import isVisible from '../support/check/isVisible';
 import openWebsite from '../support/action/openWebsite';
 import resizeScreenSize from '../support/action/resizeScreenSize';
 import loadDataset from '../support/action/loadDataset';
+import resetStubs from '../support/action/resetStubs';
+import applyStub from '../support/action/applyStub';
+
 
 module.exports = function given() {
     this.Given(
@@ -28,6 +31,16 @@ module.exports = function given() {
     this.Given(
         /^I load the dataset "([^"]*)?"$/,
         loadDataset
+    );
+
+    this.Given(
+      /^The application is working correctly$/,
+      resetStubs
+    );
+
+    this.Given(
+      /^The application has issues with the "([^"]*)?" API$/,
+      applyStub
     );
 
     this.Given(
