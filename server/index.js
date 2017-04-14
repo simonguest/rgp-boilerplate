@@ -16,7 +16,7 @@ let fb = auth.facebook(app, {callbackURL: 'http://localhost:3002/auth/callback',
 
 // GraphQL schema
 let schema = buildSchema(require('fs').readFileSync('./server/schema.graphqls', 'utf8'));
-router.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers.root(pool), graphiql: true}));
+router.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers(pool), graphiql: true}));
 
 // Static webpack generated content
 router.use('/static', express.static(`dist`));

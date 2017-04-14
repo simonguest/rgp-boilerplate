@@ -1,8 +1,7 @@
-let resolvers = function () {
-};
+let singleton = undefined;
 
-resolvers.prototype.root = (pool) => {
-  return {
+let resolvers = (pool) => {
+  singleton = singleton ? singleton : {
     organizations(){
       return new Promise((resolve, reject) => {
         pool.query('select * from organizations', (err, result) => {
@@ -69,6 +68,7 @@ resolvers.prototype.root = (pool) => {
       })
     }
   };
+  return singleton;
 };
 
-module.exports = new resolvers();
+module.exports = resolvers;
