@@ -2,10 +2,10 @@ const uuid = require('node-uuid');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
 
-let auth = function () {
-};
+let singleton = undefined;
 
-auth.prototype.facebook = (app, config) => {
+auth = (app, config) => {
+  if (singleton) return singleton;
 
   let passport = require('passport');
   app.use(session({secret: uuid.v4(), resave: true, saveUninitialized: true}));
@@ -39,15 +39,24 @@ auth.prototype.facebook = (app, config) => {
     done(null, {accessToken: user.accessToken, profile: user.profile});
   });
 
+  let isAuthenticated = (req) => {
+    return req.isAuthenticated();
+  };
+
+  let isUnauthenticated = (req) => {
+    return !isAuthenticated(req);
+  }
+
   let ensureAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (isAuthenticated(req)) {
       return next();
     }
     req.session.returnTo = req.originalUrl;
     res.redirect('/auth/login');
   };
 
-  return {passport: passport, ensureAuthenticated: ensureAuthenticated};
+  singleton = {passport: passport, ensureAuthenticated: ensureAuthenticated, isAuthenticated: isAuthenticated, isUnauthenticated: isUnauthenticated};
+  return singleton;
 };
 
-module.exports = new auth();
+module.exports = auth;
