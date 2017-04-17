@@ -45,7 +45,7 @@ auth = (app, config) => {
 
   let isUnauthenticated = (req) => {
     return !isAuthenticated(req);
-  }
+  };
 
   let ensureAuthenticated = (req, res, next) => {
     if (isAuthenticated(req)) {

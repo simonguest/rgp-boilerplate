@@ -9,12 +9,10 @@ const {buildSchema} = require('graphql');
 const resolvers = require('./resolvers');
 let auth = require('./auth');
 
-// Server and test harness
 let server = undefined;
-const testHarness = require('./test-harness')(__dirname);
 
 // Start server on pool connection
-module.exports.start = () => {
+module.exports.start = (port = 3002) => {
 
   let app = express();
   let router = express.Router();
@@ -37,17 +35,19 @@ module.exports.start = () => {
     res.sendFile(`${__dirname}/index.html`);
   });
 
-  if (process.env.NODE_ENV !== 'production') app.use('/test', testHarness);
   app.use('/', router);
 
-  pool.connect()
-    .then(() => {
-      server = app.listen(3002, function () {
-        console.log('Server is listening on 3002');
+  pool.connect((err) => {
+      console.log(err ? err : 'Postgres pool has been started');
+      server = app.listen(port, function () {
+        console.log(`Server is listening on ${port}`);
       });
     });
 };
 
 module.exports.stop = () => {
-  if (server) server.close();
+  if (server) {
+    server.close();
+    console.log('Server is stopped');
+  }
 };
