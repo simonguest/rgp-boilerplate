@@ -5,7 +5,7 @@ const resolvers = require('../../server/resolvers');
 const auth = require('../../server/auth');
 const server = require('../../server');
 
-module.exports.organizations = () => {
+module.exports.organizations_api_returns_error = () => {
   return new Promise((resolve) => {
     try {
       sandbox.stub(resolvers(), "organizations").callsFake(() => {
@@ -20,7 +20,7 @@ module.exports.organizations = () => {
   });
 };
 
-module.exports.auth = () => {
+module.exports.bypass_authentication = () => {
   return new Promise((resolve) => {
     try {
       sandbox.stub(auth(), "isAuthenticated").callsFake(() => {

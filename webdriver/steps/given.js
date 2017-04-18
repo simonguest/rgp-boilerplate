@@ -18,8 +18,8 @@ import isVisible from '../support/check/isVisible';
 import openWebsite from '../support/action/openWebsite';
 import resizeScreenSize from '../support/action/resizeScreenSize';
 import loadDataset from '../support/action/loadDataset';
-import resetStubs from '../support/action/resetStubs';
-import applyStub from '../support/action/applyStub';
+import resetBehaviors from '../support/action/resetBehaviors';
+import applyBehavior from '../support/action/applyBehavior';
 
 
 module.exports = function given() {
@@ -35,12 +35,13 @@ module.exports = function given() {
 
     this.Given(
       /^The application is working correctly$/,
-      resetStubs
+      resetBehaviors
     );
 
     this.Given(
-      /^The application has issues with the "([^"]*)?" API$/,
-      applyStub
+
+      /^The application exhibits the "([^"]*)?" behavior$/,
+      applyBehavior
     );
 
     this.Given(

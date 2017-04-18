@@ -7,7 +7,7 @@ module.exports = (dir, port = 3003) => {
   istanbul.hookLoader(dir, {verbose: true});
 
   const datasets = require('./datasets');
-  const stubs = require('./stubs');
+  const behaviors = require('./behaviors');
 
   app.use('/kill', () => {
     process.exit(0);
@@ -33,11 +33,11 @@ module.exports = (dir, port = 3003) => {
     res.send({datasets: Object.keys(datasets)});
   });
 
-  app.post('/stubs/:stub', (req, res) => {
-    if (Object.keys(stubs).indexOf(req.params.stub) === -1) res.send({error: 'Not Found'});
-    Object.keys(stubs).map((stub) => {
-      if (stub === req.params.stub) {
-        stubs[stub]()
+  app.post('/behaviors/:behavior', (req, res) => {
+    if (Object.keys(behaviors).indexOf(req.params.behavior) === -1) res.send({error: 'Not Found'});
+    Object.keys(behaviors).map((behavior) => {
+      if (behavior === req.params.behavior) {
+        behaviors[behavior]()
           .then((status) => {
             return res.send({status: status});
           }, (err) => {
@@ -47,8 +47,8 @@ module.exports = (dir, port = 3003) => {
     });
   });
 
-  app.get('/stubs', (req, res) => {
-    res.send({stubs: Object.keys(stubs)});
+  app.get('/behaviors', (req, res) => {
+    res.send({behaviors: Object.keys(behaviors)});
   });
 
   app.use('/', (req, res) => {
