@@ -17,5 +17,5 @@ Scenario: Check that the home page contains the sample companies
 
 Scenario: Check that the user gets a friendly error message if there are problems with the API call
     Given The application has issues with the "organizations" API
-    When I open the url "/"
+    Given I open the url "/"
     Then I expect that element "#error" contains the text "An error has occurred: Database is unavailable."

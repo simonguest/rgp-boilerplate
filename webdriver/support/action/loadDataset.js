@@ -6,7 +6,7 @@ const request = require('request');
  * @param  {Function} done Function to execute when finished
  */
 module.exports = (dataset, done) => {
-    request(`http://localhost:3003/datasets/${dataset}`, (err, res, body) => {
+    request.post(`http://localhost:3003/datasets/${dataset}`, (err, res, body) => {
         if (err) throw err;
         expect(body).to.contain('{"status":"success"}');
         done();

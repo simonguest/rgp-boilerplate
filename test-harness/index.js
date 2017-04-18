@@ -15,10 +15,10 @@ module.exports = (dir, port = 3003) => {
 
   app.use('/coverage', istanbul.createHandler({verbose: true, resetOnGet: true}));
 
-  app.use('/datasets', (req, res) => {
-    if (Object.keys(datasets).indexOf(req.path.replace('/', '')) === -1) res.send({datasets: Object.keys(datasets)});
+  app.post('/datasets/:dataset', (req, res) => {
+    if (Object.keys(datasets).indexOf(req.params.dataset) === -1) res.send({error: 'Not Found'});
     Object.keys(datasets).map((dataset) => {
-      if (req.path === `/${dataset}`) {
+      if (dataset === req.params.dataset) {
         datasets[dataset]()
           .then((status) => {
             return res.send({status: status});
@@ -29,10 +29,14 @@ module.exports = (dir, port = 3003) => {
     });
   });
 
-  app.use('/stubs', (req, res) => {
-    if (Object.keys(stubs).indexOf(req.path.replace('/', '')) === -1) res.send({stubs: Object.keys(stubs)});
+  app.get('/datasets', (req, res) => {
+    res.send({datasets: Object.keys(datasets)});
+  });
+
+  app.post('/stubs/:stub', (req, res) => {
+    if (Object.keys(stubs).indexOf(req.params.stub) === -1) res.send({error: 'Not Found'});
     Object.keys(stubs).map((stub) => {
-      if (req.path === `/${stub}`) {
+      if (stub === req.params.stub) {
         stubs[stub]()
           .then((status) => {
             return res.send({status: status});
@@ -41,6 +45,10 @@ module.exports = (dir, port = 3003) => {
           });
       }
     });
+  });
+
+  app.get('/stubs', (req, res) => {
+    res.send({stubs: Object.keys(stubs)});
   });
 
   app.use('/', (req, res) => {

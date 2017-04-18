@@ -5,7 +5,7 @@ const request = require('request');
  * @param  {Function} done Function to execute when finished
  */
 module.exports = (stub, done) => {
-  request(`http://localhost:3003/stubs/${stub}`, (err, res, body) => {
+  request.post(`http://localhost:3003/stubs/${stub}`, (err, res, body) => {
     if (err) throw err;
     expect(body).to.contain('{"status":"success"}');
     done();
