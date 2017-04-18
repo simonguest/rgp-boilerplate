@@ -15,27 +15,24 @@ let server = undefined;
 module.exports.start = (port = 3002) => {
 
   let app = express();
-  let router = express.Router();
 
   // Authentication strategy
   auth(app, {callbackURL: 'http://localhost:3002/auth/callback', clientID: process.env.FACEBOOK_CLIENT_ID, clientSecret: process.env.FACEBOOK_SECRET});
 
   // GraphQL schema
   let schema = buildSchema(require('fs').readFileSync('./server/schema.graphqls', 'utf8'));
-  router.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers(pool), graphiql: true}));
+  app.use('/graphql', graphqlHTTP({schema: schema, rootValue: resolvers(pool), graphiql: true}));
 
   // Static webpack generated content
-  router.use('/static', express.static(`dist`));
+  app.use('/static', express.static(`dist`));
 
   // Auth required for admin route
-  router.use('/admin', auth().ensureAuthenticated);
+  app.use('/admin', auth().ensureAuthenticated);
 
   // Default page
-  router.use('/', (req, res) => {
+  app.use('/', (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
   });
-
-  app.use('/', router);
 
   pool.connect((err) => {
       console.log(err ? err : 'Postgres pool has been started');

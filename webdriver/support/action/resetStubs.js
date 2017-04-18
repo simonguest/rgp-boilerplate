@@ -1,12 +1,12 @@
+const request = require('request');
 /**
  * Reset Stubs
  * @param  {Function} done Function to execute when finished
  */
 module.exports = (done) => {
-  let previousUrl = browser.getUrl();
-  let url = `/test/stubs/reset`;
-  browser.url(url);
-  expect(browser.source().value).to.contain('{"status":"success"}');
-  browser.url(previousUrl);
-  done();
+  request(`http://localhost:3003/stubs/reset`, (err, res, body) => {
+    if (err) throw err;
+    expect(body).to.contain('{"status":"success"}');
+    done();
+  });
 };

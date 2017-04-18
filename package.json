@@ -41,6 +41,7 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.0",
     "redux-thunk": "^2.2.0",
+    "request": "^2.81.0",
     "sinon": "^2.1.0",
     "wdio-cucumber-framework": "^0.2.16",
     "wdio-selenium-standalone-service": "^0.0.8",
