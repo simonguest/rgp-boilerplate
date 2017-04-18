@@ -4094,6 +4094,10 @@ verror@1.3.6:
   dependencies:
     extsprintf "1.0.2"
 
+vitalsigns@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/vitalsigns/-/vitalsigns-0.4.3.tgz#f83500cc61dfc5a05aac01082247bd29057cd303"
+
 vm-browserify@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"

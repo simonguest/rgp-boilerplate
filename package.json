@@ -43,6 +43,7 @@
     "redux-thunk": "^2.2.0",
     "request": "^2.81.0",
     "sinon": "^2.1.0",
+    "vitalsigns": "^0.4.3",
     "wdio-cucumber-framework": "^0.2.16",
     "wdio-selenium-standalone-service": "^0.0.8",
     "wdio-spec-reporter": "^0.1.0",
