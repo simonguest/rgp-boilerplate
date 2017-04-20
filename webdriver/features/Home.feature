@@ -18,4 +18,4 @@ Scenario: Check that the home page contains the sample companies
 Scenario: Check that the user gets a friendly error message if there are problems with the API call
     Given The application exhibits the "organizations_api_returns_error" behavior
     Given I open the url "/"
-    Then I expect that element "#error" contains the text "An error has occurred: Database is unavailable."
+    Then I wait on element "#error" for 1000ms to contain a text
