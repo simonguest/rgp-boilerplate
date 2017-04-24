@@ -8,14 +8,14 @@ class OrgList extends Component {
   }
 
   render() {
-    const {orgs, selectedOrg, selectOrg, updateOrg} = this.props;
-    const lineStyle={cursor:'pointer'};
+    const {orgs, selectedOrg, selectOrg, updateOrg, deleteOrg} = this.props;
+    const lineStyle = {cursor: 'pointer'};
     let orgItems = orgs.map((org) => {
       return (
         <div key={org.id}>
-          <li style={lineStyle} onClick={() => selectOrg({id:org.id})}>{org.name}</li>
-          {org.id === selectedOrg ? <EditForm onClick={(name) => updateOrg({id:org.id, name:name})}/> : null}
-      </div>
+          <li style={lineStyle} onClick={() => selectOrg({id: org.id})}>{org.name}</li>
+          {org.id === selectedOrg ? <EditForm updateClick={(name) => updateOrg({id: org.id, name: name})} deleteClick={() => deleteOrg({id: org.id})}/> : null }
+        </div>
       );
     });
     return (
@@ -31,7 +31,8 @@ OrgList.propTypes = {
   orgs: PropTypes.array.isRequired,
   selectOrg: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  updateOrg: PropTypes.func.isRequired
+  updateOrg: PropTypes.func.isRequired,
+  deleteOrg: PropTypes.func.isRequired
 };
 
 export default OrgList;

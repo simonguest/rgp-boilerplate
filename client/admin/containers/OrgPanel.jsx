@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import OrgList from '../components/OrgList'
-import {selectOrg, fetchOrgs, updateOrg} from '../../actions';
+import {selectOrg, fetchOrgs, updateOrg, deleteOrg} from '../../actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -21,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateOrg: (data) => {
       dispatch(updateOrg(data))
+    },
+    deleteOrg: (data) => {
+      dispatch(deleteOrg(data))
     }
   }
 };

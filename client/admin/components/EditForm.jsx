@@ -5,18 +5,20 @@ class EditForm extends Component {
   }
 
   render() {
-    const {onClick} = this.props;
+    const {updateClick, deleteClick} = this.props;
     return (
       <div>
         <input type="text" ref="nameInput" placeholder="New Name"/>
-        <button onClick={() => {onClick(this.refs.nameInput.value)}}>Update</button>
+        <button onClick={() => {updateClick(this.refs.nameInput.value)}}>Update</button>
+        <button onClick={() => {deleteClick()}}>Delete</button>
       </div>
     );
   }
 }
 
 EditForm.propTypes = {
-  onClick: PropTypes.func.isRequired
+  updateClick: PropTypes.func.isRequired,
+  deleteClick: PropTypes.func.isRequired
 };
 
 export default EditForm

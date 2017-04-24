@@ -50,8 +50,8 @@ let resolvers = (pool) => {
       })
     },
     renameOrganization(args, req){
-      if (auth().isUnauthenticated(req)) return reject("You need to be authenticated.");
       return new Promise((resolve, reject) => {
+        if (auth().isUnauthenticated(req)) return reject("You need to be authenticated.");
         pool.query(`update organizations set name='${args.name}' where id='${args.id}' returning id, name;`, (err, result) => {
           if (err) return reject(err);
           if (result.rows.length !== 1) return reject("Could not rename organization with that id");
@@ -60,8 +60,8 @@ let resolvers = (pool) => {
       })
     },
     removeOrganization(args, req){
-      if (auth().isUnauthenticated(req)) return reject("You need to be authenticated.");
       return new Promise((resolve, reject) => {
+        if (auth().isUnauthenticated(req)) return reject("You need to be authenticated.");
         pool.query(`delete from organizations where id='${args.id}' returning id;`, (err, result) => {
           if (err) return reject(err);
           if (result.rows.length !== 1) return reject("Could not remove organization with that id");
