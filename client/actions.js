@@ -31,7 +31,7 @@ export const updateOrg = (data) => {
   return dispatch => {
     dispatch(mutateOrg(data));
     return gql(
-      `mutation mm { renameOrganization(id:"${data.id}", name:"${data.name}") { id } }`,
+      `mutation uo { renameOrganization(id:"${data.id}", name:"${data.name}") { id } }`,
       data => dispatch(fetchOrgs()),
       err => dispatch(apiError(err))
     )
@@ -42,7 +42,18 @@ export const deleteOrg = (data) => {
   return dispatch => {
     dispatch(mutateOrg({id:data.id}));
     return gql(
-      `mutation mm { removeOrganization(id:"${data.id}") { id } }`,
+      `mutation do { removeOrganization(id:"${data.id}") { id } }`,
+      (data) => dispatch(fetchOrgs()),
+      err => dispatch(apiError(err))
+    )
+  };
+};
+
+export const createOrg = (data) => {
+  return dispatch => {
+    dispatch(mutateOrg({id:data.id}));
+    return gql(
+      `mutation co { addOrganization(name:"${data.name}") { id } }`,
       (data) => dispatch(fetchOrgs()),
       err => dispatch(apiError(err))
     )

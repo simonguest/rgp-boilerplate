@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import EditForm from './EditForm';
+import CreateForm from './CreateForm';
 
 class OrgList extends Component {
   componentDidMount() {
@@ -8,7 +9,7 @@ class OrgList extends Component {
   }
 
   render() {
-    const {orgs, selectedOrg, selectOrg, updateOrg, deleteOrg} = this.props;
+    const {orgs, selectedOrg, selectOrg, updateOrg, deleteOrg, createOrg} = this.props;
     const lineStyle = {cursor: 'pointer'};
     let orgItems = orgs.map((org) => {
       return (
@@ -21,6 +22,7 @@ class OrgList extends Component {
     return (
       <div>
         {orgItems}
+        <CreateForm createClick={(name) => createOrg({name: name})}/>
       </div>
     );
   }
@@ -32,7 +34,8 @@ OrgList.propTypes = {
   selectOrg: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   updateOrg: PropTypes.func.isRequired,
-  deleteOrg: PropTypes.func.isRequired
+  deleteOrg: PropTypes.func.isRequired,
+  createOrg: PropTypes.func.isRequired
 };
 
 export default OrgList;
