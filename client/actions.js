@@ -66,7 +66,7 @@ export const fetchOrgs = () => {
   return dispatch => {
     dispatch(requestOrgs());
     return gql(
-      `query q { organizations { id name } }`,
+      `query q { organizations { id name usercount } }`,
       data => dispatch(receiveOrgs(data)),
       err => dispatch(apiError(err))
     );

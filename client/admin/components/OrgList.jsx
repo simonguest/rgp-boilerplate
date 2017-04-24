@@ -13,7 +13,7 @@ class OrgList extends Component {
     let orgItems = orgs.map((org) => {
       return (
         <div key={org.id}>
-          <li style={lineStyle} onClick={() => selectOrg({id: org.id})}>{org.name}</li>
+          <li style={lineStyle} onClick={() => selectOrg({id: org.id})}>{org.name} ({org.usercount} user{org.usercount > 1 ? 's' : ''})</li>
           {org.id === selectedOrg ? <EditForm updateClick={(name) => updateOrg({id: org.id, name: name})} deleteClick={() => deleteOrg({id: org.id})}/> : null }
         </div>
       );

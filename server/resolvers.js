@@ -6,7 +6,7 @@ let resolvers = (pool) => {
   singleton = singleton ? singleton : {
     organizations(){
       return new Promise((resolve, reject) => {
-        pool.query('select * from organizations', (err, result) => {
+        pool.query('SELECT organizations.*, (SELECT COUNT(*) FROM users WHERE users.orgid = organizations.id) AS usercount FROM organizations', (err, result) => {
           if (err) return reject(err);
           resolve(result.rows);
         });

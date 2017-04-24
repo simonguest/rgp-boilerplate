@@ -2,6 +2,7 @@
 type Organization {
     id: String!
     name: String
+    usercount: Int
 }
 
 # Users in the system
