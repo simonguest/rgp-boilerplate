@@ -2,10 +2,12 @@ const uuid = require('node-uuid');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const session = require('express-session');
 
-let singleton = undefined;
+let singleton = null;
 
-auth = (app, config) => {
-  if (singleton) return singleton;
+let auth = (app, config) => {
+  if (singleton) {
+    return singleton;
+  }
 
   let passport = require('passport');
   app.use(session({ secret: uuid.v4(), resave: true, saveUninitialized: true }));
@@ -22,11 +24,11 @@ auth = (app, config) => {
   });
 
   passport.use(new FacebookStrategy({
-      callbackURL: config.callbackURL,
-      clientID: config.clientID,
-      clientSecret: config.clientSecret
-    },
-    function(accessToken, refreshToken, profile, done) {
+    callbackURL: config.callbackURL,
+    clientID: config.clientID,
+    clientSecret: config.clientSecret
+  },
+    (accessToken, refreshToken, profile, done) => {
       return done(null, { accessToken: accessToken, profile: profile });
     }
   ));

@@ -7,8 +7,10 @@ let sql = (name) => {
 
 module.exports.empty = () => {
   return new Promise((resolve, reject) => {
-    pool.query(sql("empty"), (err) => {
-      if (err) return reject(`error: ${err}`);
+    pool.query(sql('empty'), (err) => {
+      if (err) {
+        return reject(`error: ${err}`);
+      }
       resolve('success');
     });
   });
@@ -16,8 +18,10 @@ module.exports.empty = () => {
 
 module.exports.typical = () => {
   return new Promise((resolve, reject) => {
-    pool.query(sql("empty") + sql("typical"), (err) => {
-      if (err) return reject(`error: ${err}`);
+    pool.query(sql('empty') + sql('typical'), (err) => {
+      if (err) {
+        return reject(`error: ${err}`);
+      }
       resolve('success');
     });
   });

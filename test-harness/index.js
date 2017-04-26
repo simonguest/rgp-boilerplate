@@ -1,6 +1,5 @@
 const istanbul = require('istanbul-middleware');
 
-const url = require('url');
 const express = require('express');
 const app = express();
 
@@ -20,7 +19,9 @@ module.exports = (dir, port = 3003) => {
   });
 
   app.post('/controls/:control', (req, res) => {
-    if (Object.keys(controls).indexOf(req.params.control) === -1) res.send({ error: 'Not Found' });
+    if (Object.keys(controls).indexOf(req.params.control) === -1) {
+      res.send({ error: 'Not Found' });
+    }
     Object.keys(controls).map((control) => {
       if (control === req.params.control) {
         controls[control]()
@@ -38,7 +39,9 @@ module.exports = (dir, port = 3003) => {
   });
 
   app.post('/datasets/:dataset', (req, res) => {
-    if (Object.keys(datasets).indexOf(req.params.dataset) === -1) res.send({ error: 'Not Found' });
+    if (Object.keys(datasets).indexOf(req.params.dataset) === -1) {
+      res.send({ error: 'Not Found' });
+    }
     Object.keys(datasets).map((dataset) => {
       if (dataset === req.params.dataset) {
         datasets[dataset]()
@@ -56,7 +59,9 @@ module.exports = (dir, port = 3003) => {
   });
 
   app.post('/behaviors/:behavior', (req, res) => {
-    if (Object.keys(behaviors).indexOf(req.params.behavior) === -1) res.send({ error: 'Not Found' });
+    if (Object.keys(behaviors).indexOf(req.params.behavior) === -1) {
+      res.send({ error: 'Not Found' });
+    }
     Object.keys(behaviors).map((behavior) => {
       if (behavior === req.params.behavior) {
         behaviors[behavior]()
@@ -82,7 +87,7 @@ module.exports = (dir, port = 3003) => {
     });
   });
 
-  app.listen(port, function() {
+  app.listen(port, function () {
     console.log(`Test Harness loaded on port ${port}`);
   });
 

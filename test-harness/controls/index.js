@@ -1,5 +1,5 @@
 module.exports.terminate = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise(() => {
     process.exit(0);
   });
 };

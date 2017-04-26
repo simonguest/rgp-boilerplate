@@ -1,5 +1,5 @@
 const vitalsigns = require('vitalsigns');
-const vitals = new vitalsigns();
+const vitals = new vitalsigns(); // eslint-disable-line new-cap
 
 vitals.monitor('cpu');
 vitals.monitor('mem', { units: 'MB' });

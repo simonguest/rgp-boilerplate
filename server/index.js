@@ -9,11 +9,10 @@ const { buildSchema } = require('graphql');
 const resolvers = require('./resolvers');
 let auth = require('./auth');
 
-let server = undefined;
+let server = null;
 
 // Start server on pool connection
 module.exports.start = (port = 3002) => {
-
   let app = express();
 
   // Authentication strategy
@@ -24,7 +23,7 @@ module.exports.start = (port = 3002) => {
   app.use('/graphql', graphqlHTTP({ schema: schema, rootValue: resolvers(pool), graphiql: true }));
 
   // Static webpack generated content
-  app.use('/static', express.static(`dist`));
+  app.use('/static', express.static('dist'));
 
   // Auth required for admin route
   app.use('/admin', auth().ensureAuthenticated);
@@ -36,7 +35,7 @@ module.exports.start = (port = 3002) => {
 
   pool.connect((err) => {
     console.log(err ? err : 'Postgres pool has been started');
-    server = app.listen(port, function() {
+    server = app.listen(port, function () {
       console.log(`Server is listening on ${port}`);
     });
   });

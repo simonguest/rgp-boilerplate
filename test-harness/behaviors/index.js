@@ -5,12 +5,12 @@ const resolvers = require('../../server/resolvers');
 const auth = require('../../server/auth');
 const server = require('../../server');
 
-module.exports.organizations_api_returns_error = () => {
+module.exports.organizations_api_returns_error = () => { // eslint-disable-line camelcase
   return new Promise((resolve) => {
     try {
-      sandbox.stub(resolvers(), "organizations").callsFake(() => {
-        return new Promise((resolve, reject) => {
-          reject("Database is unavailable.");
+      sandbox.stub(resolvers(), 'organizations').callsFake(() => {
+        return new Promise((localResolve, reject) => {
+          reject('Database is unavailable.');
         });
       });
       resolve('success');
@@ -20,16 +20,16 @@ module.exports.organizations_api_returns_error = () => {
   });
 };
 
-module.exports.bypass_authentication = () => {
+module.exports.bypass_authentication = () => { // eslint-disable-line camelcase
   return new Promise((resolve) => {
     try {
-      sandbox.stub(auth(), "isAuthenticated").callsFake(() => {
+      sandbox.stub(auth(), 'isAuthenticated').callsFake(() => {
         return true;
       });
-      sandbox.stub(auth(), "isUnauthenticated").callsFake(() => {
+      sandbox.stub(auth(), 'isUnauthenticated').callsFake(() => {
         return false;
       });
-      sandbox.stub(auth(), "ensureAuthenticated").callsFake((req, res, next) => {
+      sandbox.stub(auth(), 'ensureAuthenticated').callsFake((req, res, next) => {
         next();
       });
       // restart the server as auth is bound to express context
