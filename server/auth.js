@@ -8,11 +8,11 @@ auth = (app, config) => {
   if (singleton) return singleton;
 
   let passport = require('passport');
-  app.use(session({secret: uuid.v4(), resave: true, saveUninitialized: true}));
+  app.use(session({ secret: uuid.v4(), resave: true, saveUninitialized: true }));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.get('/auth/login', passport.authenticate('facebook', {scope: 'email'}));
-  app.get('/auth/callback', passport.authenticate('facebook', {failureRedirect: '/'}), (req, res) => {
+  app.get('/auth/login', passport.authenticate('facebook', { scope: 'email' }));
+  app.get('/auth/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
     res.redirect(req.session.returnTo || '/');
     delete req.session.returnTo;
   });
@@ -26,8 +26,8 @@ auth = (app, config) => {
       clientID: config.clientID,
       clientSecret: config.clientSecret
     },
-    function (accessToken, refreshToken, profile, done) {
-      return done(null, {accessToken: accessToken, profile: profile});
+    function(accessToken, refreshToken, profile, done) {
+      return done(null, { accessToken: accessToken, profile: profile });
     }
   ));
 
@@ -36,7 +36,7 @@ auth = (app, config) => {
   });
 
   passport.deserializeUser((user, done) => {
-    done(null, {accessToken: user.accessToken, profile: user.profile});
+    done(null, { accessToken: user.accessToken, profile: user.profile });
   });
 
   let isAuthenticated = (req) => {
@@ -55,7 +55,7 @@ auth = (app, config) => {
     res.redirect('/auth/login');
   };
 
-  singleton = {passport: passport, ensureAuthenticated: ensureAuthenticated, isAuthenticated: isAuthenticated, isUnauthenticated: isUnauthenticated};
+  singleton = { passport: passport, ensureAuthenticated: ensureAuthenticated, isAuthenticated: isAuthenticated, isUnauthenticated: isUnauthenticated };
   return singleton;
 };
 
