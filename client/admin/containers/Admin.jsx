@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AdminHeader from '../components/Header';
 import OrgPanel from '../containers/OrgPanel';
+import SideBar from '../components/SideBar';
 import Error from '../components/Error';
 
 class Admin extends Component {
@@ -11,10 +12,9 @@ class Admin extends Component {
     return (
       <div>
         <AdminHeader isFetching={isFetching}/>
-        <OrgPanel/>
-        <br/>
-        <a href="/">Return to site</a>
-        <Error error={error}/>
+        <SideBar error={error}>
+          {this.props.children}
+        </SideBar>
       </div>
     )
   }
@@ -27,8 +27,7 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) =>
-{
+const mapDispatchToProps = (dispatch) => {
   return {
 
   }

@@ -21,6 +21,7 @@ class OrgList extends Component {
     });
     return (
       <div>
+        <h1 className="page-header">Organizations</h1>
         {orgItems}
         <CreateForm createClick={(name) => createOrg({name: name})}/>
       </div>
