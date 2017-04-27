@@ -9,11 +9,11 @@ const fs = require('fs');
 module.exports = (dataset, done) => {
 	let options = {
 		method: 'POST',
-		headers : [{
-			'Content-Type': 'text/plan'
-		}],
-		url: 'http://localhost:3003/dataset',
-		body: fs.readFileSync(`${__dirname}/../../data/${dataset}.sql`)
+		headers: {
+			'content-type': 'text/plain; charset=utf-8'
+		},
+		url: 'http://localhost:3003/data',
+		body: fs.readFileSync(`${__dirname}/../../data/${dataset}.sql`).toString()
 	};
 
     request(options, (err, res, body) => {

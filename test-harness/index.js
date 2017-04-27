@@ -3,6 +3,7 @@ const istanbul = require('istanbul-middleware');
 const pg = require('pg');
 let pool = new pg.Pool();
 
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -13,8 +14,6 @@ module.exports = (dir, port = 3003) => {
   const controls = require('./controls');
   const behaviors = require('./behaviors');
   const instrumentation = require('./instrumentation');
-
-  app.use(bodyParser.text({}));
 
   app.get('/instrumentation/vitalsigns', instrumentation.vitalsigns.express);
   app.use('/instrumentation/coverage', istanbul.createHandler({ verbose: true, resetOnGet: true }));
@@ -39,7 +38,7 @@ module.exports = (dir, port = 3003) => {
     });
   });
 
-  app.post('/dataset', (req, res) => {
+  app.post('/data', bodyParser.text(), (req, res) => {
     pool.query(req.body, (err) => {
       if (err) {
         return res.send({ error: err });
@@ -48,24 +47,22 @@ module.exports = (dir, port = 3003) => {
     });
   });
 
-  app.get('/behaviors', (req, res) => {
-    res.send({ behaviors: Object.keys(behaviors) });
+  app.use('/behaviors/reset', (req, res) => {
+    behaviors.reset()
+      .then((status) => {
+        return res.send({ status: status });
+      }, (err) => {
+        return res.send({ error: err });
+      });
   });
 
-  app.post('/behaviors/:behavior', (req, res) => {
-    if (Object.keys(behaviors).indexOf(req.params.behavior) === -1) {
-      res.send({ error: 'Not Found' });
-    }
-    Object.keys(behaviors).map((behavior) => {
-      if (behavior === req.params.behavior) {
-        behaviors[behavior]()
-          .then((status) => {
-            return res.send({ status: status });
-          }, (err) => {
-            return res.send({ error: err });
-          });
-      }
-    });
+  app.post('/behaviors', bodyParser.text(), (req, res) => {
+    behaviors.apply(req.body)
+      .then((status) => {
+        return res.send({ status: status });
+      }, (err) => {
+        return res.send({ error: err });
+      });
   });
 
   app.use('/', (req, res) => {
@@ -75,8 +72,9 @@ module.exports = (dir, port = 3003) => {
         { '/instrumentation/vitalsigns': 'View the vitalsigns for the running service' },
         { '/instrumentation/coverage': 'View the current code coverage report' },
         { '/instrumentation/coverage/download': 'Download the code coverage report' },
-        { '/dataset': 'Apply dataset' },
-        { '/behaviors': 'Apply behaviors' }
+        { '/data': 'Apply data' },
+        { '/behaviors': 'Apply behaviors' },
+        { '/behaviors/reset': 'Reset behaviors' }
       ]
     });
   });

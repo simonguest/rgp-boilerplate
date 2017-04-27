@@ -16,6 +16,6 @@ Scenario: Check that the home page contains the sample companies
     And I expect that element "body" contains the text "University of Washington"
 
 Scenario: Check that the user gets a friendly error message if there are problems with the API call
-    Given The application exhibits the "organizations_api_returns_error" behavior
+    Given The application exhibits the "apierror" behavior
     Given I open the url "/"
     Then I wait on element "#error" for 3000ms to contain a text
