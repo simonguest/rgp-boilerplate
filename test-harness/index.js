@@ -1,9 +1,5 @@
 const istanbul = require('istanbul-middleware');
 
-const pg = require('pg');
-let pool = new pg.Pool();
-
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -13,6 +9,7 @@ module.exports = (dir, port = 3003) => {
 
   const controls = require('./controls');
   const behaviors = require('./behaviors');
+  const data = require('./data');
   const instrumentation = require('./instrumentation');
 
   app.get('/instrumentation/vitalsigns', instrumentation.vitalsigns.express);
@@ -39,12 +36,12 @@ module.exports = (dir, port = 3003) => {
   });
 
   app.post('/data', bodyParser.text(), (req, res) => {
-    pool.query(req.body, (err) => {
-      if (err) {
+    data.apply(req.body)
+      .then((status) => {
+        return res.send({ status: status });
+      }, (err) => {
         return res.send({ error: err });
-      }
-      return res.send({ status: 'success' });
-    });
+      });
   });
 
   app.use('/behaviors/reset', (req, res) => {
