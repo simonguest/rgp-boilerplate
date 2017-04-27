@@ -1,15 +1,20 @@
 const istanbul = require('istanbul-middleware');
 
+const pg = require('pg');
+let pool = new pg.Pool();
+
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
 module.exports = (dir, port = 3003) => {
   istanbul.hookLoader(dir, { verbose: true });
 
   const controls = require('./controls');
-  const datasets = require('./datasets');
   const behaviors = require('./behaviors');
   const instrumentation = require('./instrumentation');
+
+  app.use(bodyParser.text({}));
 
   app.get('/instrumentation/vitalsigns', instrumentation.vitalsigns.express);
   app.use('/instrumentation/coverage', istanbul.createHandler({ verbose: true, resetOnGet: true }));
@@ -34,23 +39,12 @@ module.exports = (dir, port = 3003) => {
     });
   });
 
-  app.get('/datasets', (req, res) => {
-    res.send({ datasets: Object.keys(datasets) });
-  });
-
-  app.post('/datasets/:dataset', (req, res) => {
-    if (Object.keys(datasets).indexOf(req.params.dataset) === -1) {
-      res.send({ error: 'Not Found' });
-    }
-    Object.keys(datasets).map((dataset) => {
-      if (dataset === req.params.dataset) {
-        datasets[dataset]()
-          .then((status) => {
-            return res.send({ status: status });
-          }, (err) => {
-            return res.send({ error: err });
-          });
+  app.post('/dataset', (req, res) => {
+    pool.query(req.body, (err) => {
+      if (err) {
+        return res.send({ error: err });
       }
+      return res.send({ status: 'success' });
     });
   });
 
@@ -78,16 +72,16 @@ module.exports = (dir, port = 3003) => {
     res.send({
       paths: [
         { '/controls/terminate': 'Terminates the service (used for CI routine)' },
-        { '/instrumentationpaq/vitalsigns': 'View the vitalsigns for the running service' },
+        { '/instrumentation/vitalsigns': 'View the vitalsigns for the running service' },
         { '/instrumentation/coverage': 'View the current code coverage report' },
         { '/instrumentation/coverage/download': 'Download the code coverage report' },
-        { '/datasets': 'Load datasets' },
+        { '/dataset': 'Apply dataset' },
         { '/behaviors': 'Apply behaviors' }
       ]
     });
   });
 
-  app.listen(port, function () {
+  app.listen(port, () => {
     console.log(`Test Harness loaded on port ${port}`);
   });
 
