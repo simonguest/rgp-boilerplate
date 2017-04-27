@@ -9,10 +9,10 @@ module.exports = (dir, port = 3003) => {
   const controls = require('./controls');
   const datasets = require('./datasets');
   const behaviors = require('./behaviors');
-  const inspections = require('./inspections');
+  const instrumentation = require('./instrumentation');
 
-  app.get('/inspections/vitalsigns', inspections.vitalsigns.express);
-  app.use('/inspections/coverage', istanbul.createHandler({ verbose: true, resetOnGet: true }));
+  app.get('/instrumentation/vitalsigns', instrumentation.vitalsigns.express);
+  app.use('/instrumentation/coverage', istanbul.createHandler({ verbose: true, resetOnGet: true }));
 
   app.get('/controls', (req, res) => {
     res.send({ controls: Object.keys(controls) });
@@ -78,9 +78,9 @@ module.exports = (dir, port = 3003) => {
     res.send({
       paths: [
         { '/controls/terminate': 'Terminates the service (used for CI routine)' },
-        { '/inspections/vitalsigns': 'View the vitalsigns for the running service' },
-        { '/inspections/coverage': 'View the current code coverage report' },
-        { '/inspectionsrs/coverage/download': 'Download the code coverage report' },
+        { '/instrumentationpaq/vitalsigns': 'View the vitalsigns for the running service' },
+        { '/instrumentation/coverage': 'View the current code coverage report' },
+        { '/instrumentation/coverage/download': 'Download the code coverage report' },
         { '/datasets': 'Load datasets' },
         { '/behaviors': 'Apply behaviors' }
       ]
