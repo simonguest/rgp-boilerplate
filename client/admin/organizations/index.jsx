@@ -1,8 +1,11 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { selectOrg, fetchOrgs, updateOrg, deleteOrg, createOrg } from '../../actions';
+
 import EditForm from './EditForm';
 import CreateForm from './CreateForm';
 
-class OrgList extends Component {
+class OrgPanel extends Component {
   componentDidMount() {
     const {fetchOrgs} = this.props;
     fetchOrgs();
@@ -29,7 +32,7 @@ class OrgList extends Component {
   }
 }
 
-OrgList.propTypes = {
+OrgPanel.propTypes = {
   selectedOrg: PropTypes.string.isRequired,
   orgs: PropTypes.array.isRequired,
   selectOrg: PropTypes.func.isRequired,
@@ -39,4 +42,32 @@ OrgList.propTypes = {
   createOrg: PropTypes.func.isRequired
 };
 
-export default OrgList;
+const mapStateToProps = (state) => {
+  return {
+    orgs: state.orgs.items,
+    selectedOrg: state.orgs.selectedOrg,
+    isFetching: state.orgs.isFetching
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchOrgs: () => {
+      dispatch(fetchOrgs())
+    },
+    selectOrg: (data) => {
+      dispatch(selectOrg(data))
+    },
+    updateOrg: (data) => {
+      dispatch(updateOrg(data))
+    },
+    deleteOrg: (data) => {
+      dispatch(deleteOrg(data))
+    },
+    createOrg: (data) => {
+      dispatch(createOrg(data))
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrgPanel);

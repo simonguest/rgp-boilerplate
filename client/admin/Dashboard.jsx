@@ -1,8 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
 class Dashboard extends Component {
-  componentDidMount() {
-  }
 
   render() {
     return (

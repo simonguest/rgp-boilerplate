@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
-import Error from '../components/Error';
-import OrgPanel from './OrgPanel';
+import Header from './Header';
+import Error from './Error';
+import OrgPanel from './organizations';
 
 class App extends Component {
 

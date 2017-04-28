@@ -1,11 +1,11 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import App from './app/containers/App';
-import Admin from './admin/containers/Admin';
-import OrgPanel from './admin/containers/OrgPanel';
-import UserPanel from './admin/containers/UserPanel';
-import Dashboard from './admin/components/Dashboard';
+import App from './app';
+import Admin from './admin';
+import OrgPanel from './admin/organizations/index';
+import UserPanel from './admin/users/index';
+import Dashboard from './admin/Dashboard';
 
 import configureStore from './store';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';

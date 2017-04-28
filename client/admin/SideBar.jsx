@@ -2,12 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { render } from 'react-dom';
 import { Router, Route, Link } from 'react-router'
 
-import OrgPanel from '../containers/OrgPanel';
-import Error from '../components/Error';
-
 export default class SideBar extends Component {
   render() {
-    const { error, dismissApiError } = this.props;
     return (
       <div className="container-fluid">
         <div className="row">
@@ -18,10 +14,6 @@ export default class SideBar extends Component {
               <li><Link to="/admin/users">Users</Link></li>
             </ul>
           </div>
-          <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <Error error={error} onDismiss={dismissApiError}/>
-            {this.props.children}
-          </div>
         </div>
       </div>
     );
@@ -29,6 +21,4 @@ export default class SideBar extends Component {
 };
 
 SideBar.propTypes = {
-  error: PropTypes.string.isRequired,
-  dismissApiError: PropTypes.func.isRequired
 };

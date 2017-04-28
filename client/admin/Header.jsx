@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class AdminHeader extends Component {
+export default class Header extends Component {
   render() {
     const { isFetching } = this.props;
     let title = `Sample Application - Admin Page ${isFetching ? '(Loading)' : ''}`;
@@ -27,6 +27,6 @@ export default class AdminHeader extends Component {
   }
 };
 
-AdminHeader.propTypes = {
+Header.propTypes = {
   isFetching: PropTypes.bool.isRequired
 };

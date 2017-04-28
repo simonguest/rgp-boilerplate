@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AdminHeader from '../components/Header';
-import OrgPanel from '../containers/OrgPanel';
-import SideBar from '../components/SideBar';
-import Error from '../components/Error';
+import Header from './Header';
+import SideBar from './SideBar';
+import Main from './Main';
+import Error from './Error';
 
-import { dismissApiError } from '../../actions';
+import { dismissApiError } from '../actions';
 
 class Admin extends Component {
 
@@ -13,10 +13,12 @@ class Admin extends Component {
     const { isFetching, error, dismissApiError } = this.props;
     return (
       <div>
-        <AdminHeader isFetching={isFetching}/>
-        <SideBar error={error} dismissApiError={dismissApiError}>
-          {this.props.children}
-        </SideBar>
+        <Header isFetching={isFetching}/>
+        <SideBar/>
+        <Main>
+            <Error error={error} onDismiss={dismissApiError}/>
+            {this.props.children}
+        </Main>
       </div>
     )
   }
