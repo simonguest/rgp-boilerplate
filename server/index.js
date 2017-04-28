@@ -28,7 +28,7 @@ module.exports.start = (port = 3002) => {
   app.use('/graphql', graphqlHTTP({ schema: schema, rootValue: resolvers(pool), graphiql: true }));
 
   // Static webpack generated content
-  app.use('/static', express.static('dist'));
+  app.use('/static', express.static('client/static'));
 
   // Auth required for admin route
   app.use('/admin', auth().ensureAuthenticated);

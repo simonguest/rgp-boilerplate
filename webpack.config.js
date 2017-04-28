@@ -3,16 +3,16 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: [
-    './client/index.jsx'
+    './client/routes.jsx'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'client/static/js'),
     filename: 'app.bundle.js',
-    publicPath: '/static/'
+    publicPath: '/static/js/'
   },
   plugins: [new webpack.DllReferencePlugin({
     context: '.',
-    manifest: require('./dist/vendor-manifest.json'),
+    manifest: require('./client/static/js/vendor-manifest.json'),
   })],
   module: {
     rules: [{

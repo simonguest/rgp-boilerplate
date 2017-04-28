@@ -1,9 +1,9 @@
 node_modules
 /data
 npm-debug.log
-dist/app.bundle.js
-dist/vendor.bundle.js
-dist/vendor-manifest.json
-dist/*.map
+client/static/app.bundle.js
+client/static/vendor.bundle.js
+client/static/vendor-manifest.json
+client/static/*.map
 coverage
 webdriver/errors
