@@ -17,6 +17,7 @@ class OrgPanel extends Component {
     });
     return (
       <div>
+      <p>test</p>
         {orgItems}
       </div>
     );
