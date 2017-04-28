@@ -1,3 +1,8 @@
+// Requirements
+const assert = require('assert');
+assert(process.env.FACEBOOK_CLIENT_ID, 'FACEBOOK_CLIENT_ID env var required for authentication');
+assert(process.env.FACEBOOK_SECRET, 'FACEBOOK_SECRET env var required for authentication');
+
 // PostgreSql pool
 const pg = require('pg');
 let pool = new pg.Pool();
