@@ -5,11 +5,18 @@ export const RECEIVE_ORG = 'RECEIVE_ORG';
 export const SELECT_ORG = 'SELECT_ORG';
 export const MUTATE_ORG = 'MUTATE_ORG';
 export const API_ERROR = 'API_ERROR';
+export const DISMISS_API_ERROR = 'DISMISS_API_ERROR';
 
 export const apiError = (data) => {
   return {
     type: API_ERROR,
     data
+  };
+};
+
+export const dismissApiError = () => {
+  return {
+    type: DISMISS_API_ERROR
   };
 };
 

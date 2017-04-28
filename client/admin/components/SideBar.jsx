@@ -7,7 +7,7 @@ import Error from '../components/Error';
 
 export default class SideBar extends Component {
   render() {
-    const { error } = this.props;
+    const { error, dismissApiError } = this.props;
     return (
       <div className="container-fluid">
         <div className="row">
@@ -19,8 +19,8 @@ export default class SideBar extends Component {
             </ul>
           </div>
           <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <Error error={error} onDismiss={dismissApiError}/>
             {this.props.children}
-            <Error error={error}/>
           </div>
         </div>
       </div>
@@ -29,5 +29,6 @@ export default class SideBar extends Component {
 };
 
 SideBar.propTypes = {
-  error: PropTypes.string.isRequired
+  error: PropTypes.string.isRequired,
+  dismissApiError: PropTypes.func.isRequired
 };

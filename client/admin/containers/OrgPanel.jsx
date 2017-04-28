@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react'
-import {connect} from 'react-redux'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import OrgList from '../components/OrgList'
-import {selectOrg, fetchOrgs, updateOrg, deleteOrg, createOrg} from '../../actions';
+import { selectOrg, fetchOrgs, updateOrg, deleteOrg, createOrg } from '../../actions';
 
 const mapStateToProps = (state) => {
   return {

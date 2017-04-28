@@ -5,14 +5,16 @@ import OrgPanel from '../containers/OrgPanel';
 import SideBar from '../components/SideBar';
 import Error from '../components/Error';
 
+import { dismissApiError } from '../../actions';
+
 class Admin extends Component {
 
   render() {
-    const { isFetching, error } = this.props;
+    const { isFetching, error, dismissApiError } = this.props;
     return (
       <div>
         <AdminHeader isFetching={isFetching}/>
-        <SideBar error={error}>
+        <SideBar error={error} dismissApiError={dismissApiError}>
           {this.props.children}
         </SideBar>
       </div>
@@ -29,7 +31,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    dismissApiError: () => {
+      dispatch(dismissApiError())
+    }
   }
 };
 

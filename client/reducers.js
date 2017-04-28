@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { RECEIVE_ORG, REQUEST_ORG, SELECT_ORG, API_ERROR } from './actions';
+import { RECEIVE_ORG, REQUEST_ORG, SELECT_ORG, API_ERROR, DISMISS_API_ERROR } from './actions';
 
 export default function organizations(state = { isFetching: false, items: [], selectedOrg: '', error: '' }, action) {
   switch (action.type) {
@@ -11,6 +11,8 @@ export default function organizations(state = { isFetching: false, items: [], se
       return Object.assign({}, state, { selectedOrg: action.data.id });
     case API_ERROR:
       return Object.assign({}, state, { error: action.data });
+    case DISMISS_API_ERROR:
+      return Object.assign({}, state, { error: '' });
     default:
       return state;
   }
