@@ -46,7 +46,8 @@ exports.config = {
         //
         browserName: 'chrome',
         chromeOptions: {
-
+            //binary: '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
+            //args: ['--headless']
         }
     }],
     //
