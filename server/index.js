@@ -39,6 +39,7 @@ module.exports.start = (port = 3002) => {
   });
 
   pool.connect((err) => {
+    assert(!err, err);
     console.log(err ? err : 'Postgres pool has been started');
     server = app.listen(port, function () {
       console.log(`Server is listening on ${port}`);

@@ -4,20 +4,22 @@ import Header from './Header';
 import SideBar from './SideBar';
 import Main from './Main';
 import Error from './Error';
+import Confirmation from './Confirmation';
 
-import { dismissApiError } from '../actions';
+import { onErrorDismiss } from '../actions';
 
 class Admin extends Component {
 
   render() {
-    const { isFetching, error, dismissApiError } = this.props;
+    const { isFetching, error, onErrorDismiss, confirmation } = this.props;
     return (
       <div>
         <Header isFetching={isFetching}/>
         <SideBar/>
         <Main>
-            <Error error={error} onDismiss={dismissApiError}/>
-            {this.props.children}
+          {error ? <Error error={error} onDismiss={onErrorDismiss}/> : null}
+          {confirmation.message ? <Confirmation title={confirmation.title} message={confirmation.message} onDismiss={confirmation.onDismiss} onConfirm={confirmation.onConfirm} dismissText={confirmation.dismissText} confirmText={confirmation.confirmText}/> : null }
+          {this.props.children}
         </Main>
       </div>
     )
@@ -27,14 +29,15 @@ class Admin extends Component {
 const mapStateToProps = (state) => {
   return {
     isFetching: state.orgs.isFetching,
-    error: state.orgs.error
+    error: state.application.error,
+    confirmation: state.application.confirmation
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dismissApiError: () => {
-      dispatch(dismissApiError())
+    onErrorDismiss: () => {
+      dispatch(onErrorDismiss())
     }
   }
 };

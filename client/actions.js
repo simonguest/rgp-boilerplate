@@ -4,19 +4,51 @@ export const REQUEST_ORG = 'REQUEST_ORG';
 export const RECEIVE_ORG = 'RECEIVE_ORG';
 export const SELECT_ORG = 'SELECT_ORG';
 export const MUTATE_ORG = 'MUTATE_ORG';
-export const API_ERROR = 'API_ERROR';
-export const DISMISS_API_ERROR = 'DISMISS_API_ERROR';
+export const ERROR = 'ERROR';
+export const DISMISS_ERROR = 'DISMISS_ERROR';
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const OPEN_CONFIRMATION = 'OPEN_CONFIRMATION';
+export const CLOSE_CONFIRMATION = 'CLOSE_CONFIRMATION';
 
-export const apiError = (data) => {
+export const openModal = (data, onDismiss, onConfirm) => {
   return {
-    type: API_ERROR,
-    data
+    type: OPEN_MODAL,
+    data: data,
+    onDismiss: onDismiss,
+    onConfirm: onConfirm
   };
 };
 
-export const dismissApiError = () => {
+export const closeModal = () => {
   return {
-    type: DISMISS_API_ERROR
+    type: CLOSE_MODAL
+  };
+};
+
+export const openConfirmation = (data) => {
+  return {
+    type: OPEN_CONFIRMATION,
+    data: data,
+  };
+};
+
+export const closeConfirmation = () => {
+  return {
+    type: CLOSE_CONFIRMATION
+  };
+};
+
+export const error = (message) => {
+  return {
+    type: ERROR,
+    message
+  };
+};
+
+export const onErrorDismiss = () => {
+  return {
+    type: DISMISS_ERROR
   };
 };
 
@@ -53,7 +85,7 @@ export const fetchOrgs = () => {
     return gql(
       'query q { organizations { id name usercount } }',
       data => dispatch(receiveOrgs(data)),
-      err => dispatch(apiError(err))
+      err => dispatch(error(err))
     );
   };
 };
@@ -64,7 +96,7 @@ export const updateOrg = (data) => {
     return gql(
       `mutation uo { renameOrganization(id:"${data.id}", name:"${data.name}") { id } }`,
       () => dispatch(fetchOrgs()),
-      err => dispatch(apiError(err))
+      err => dispatch(error(err))
     );
   };
 };
@@ -75,7 +107,7 @@ export const deleteOrg = (data) => {
     return gql(
       `mutation do { removeOrganization(id:"${data.id}") { id } }`,
       () => dispatch(fetchOrgs()),
-      err => dispatch(apiError(err))
+      err => dispatch(error(err))
     );
   };
 };
@@ -86,7 +118,7 @@ export const createOrg = (data) => {
     return gql(
       `mutation co { addOrganization(name:"${data.name}") { id } }`,
       () => dispatch(fetchOrgs()),
-      err => dispatch(apiError(err))
+      err => dispatch(error(err))
     );
   };
 };
