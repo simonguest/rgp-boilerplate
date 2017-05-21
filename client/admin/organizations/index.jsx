@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { selectOrg, fetchOrgs, updateOrg, deleteOrg, createOrg, openConfirmation, closeConfirmation } from '../../actions';
 
-import EditForm from './EditForm';
+import List from './List';
 import CreateForm from './CreateForm';
 
-class OrgPanel extends Component {
+class Organizations extends Component {
   componentDidMount() {
     const { fetchOrgs } = this.props;
     fetchOrgs();
@@ -13,30 +13,10 @@ class OrgPanel extends Component {
 
   render() {
     const { orgs, selectedOrg, selectOrg, updateOrg, deleteOrg, createOrg, openConfirmation, closeConfirmation } = this.props;
-    const lineStyle = { cursor: 'pointer' };
-    let orgItems = orgs.map((org) => {
-      let deleteModal = () => {
-        openConfirmation({
-          title: 'Delete Organization?',
-          message: `Delete the organization, "${org.name}"?`,
-          onDismiss: closeConfirmation,
-          onConfirm: () => {
-            deleteOrg({ id: org.id });
-            closeConfirmation();
-          }
-        })
-      };
-      return (
-        <div key={org.id}>
-          <li style={lineStyle} onClick={() => selectOrg({id: org.id})}>{org.name} ({org.usercount} user{org.usercount > 1 ? 's' : ''})</li>
-          {org.id === selectedOrg ? <EditForm updateClick={(name) => updateOrg({id: org.id, name: name})} deleteClick={deleteModal} /> : null }
-        </div>
-      );
-    });
     return (
       <div>
         <h1 className="page-header">Organizations</h1>
-        {orgItems}
+        <List orgs={orgs} selectedOrg={selectedOrg} selectOrg={selectOrg} updateOrg={updateOrg} deleteOrg={deleteOrg} createOrg={createOrg} openConfirmation={openConfirmation} closeConfirmation={closeConfirmation}/>
         <CreateForm createClick={(name) => createOrg({name: name})}/>
         <button>New Organization</button>
       </div>
@@ -44,7 +24,7 @@ class OrgPanel extends Component {
   }
 }
 
-OrgPanel.propTypes = {
+Organizations.propTypes = {
   selectedOrg: PropTypes.string.isRequired,
   orgs: PropTypes.array.isRequired,
   selectOrg: PropTypes.func.isRequired,
@@ -91,4 +71,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrgPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(Organizations);

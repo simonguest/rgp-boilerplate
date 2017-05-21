@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
-class UserPanel extends Component {
+class Users extends Component {
   render() {
     return (
       <div>
@@ -11,7 +11,7 @@ class UserPanel extends Component {
   }
 }
 
-UserPanel.propTypes = {
+Users.propTypes = {
 };
 
 const mapStateToProps = (state) => {
@@ -24,4 +24,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

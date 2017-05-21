@@ -3,8 +3,8 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import App from './app';
 import Admin from './admin';
-import OrgPanel from './admin/organizations/index';
-import UserPanel from './admin/users/index';
+import Organizations from './admin/organizations/index';
+import Users from './admin/Users/index';
 import Dashboard from './admin/Dashboard';
 
 import configureStore from './store';
@@ -21,8 +21,8 @@ render(
       <Route path="/" component={App}/>
       <Route path="admin" component={Admin}>
      	<IndexRoute component={Dashboard} />
-        <Route path="organizations" component={OrgPanel} />
-        <Route path="users" component={UserPanel} />
+        <Route path="organizations" component={Organizations} />
+        <Route path="users" component={Users} />
       </Route>
     </Router>
   </Provider>,
